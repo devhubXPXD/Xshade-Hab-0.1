@@ -45,6 +45,8 @@ local chack_auto_farm_money = false
 local BackPack = Ply.Backpack
 local tools = {} -- ตารางสำหรับเก็บชื่อ Tool
 
+local ck_autofarm_mon = false
+
 local Ply_body = workspace.Characters
 
 -- ตรวจสอบเลเวล (Data ต้องมี)
@@ -96,22 +98,22 @@ end
 
 
 -- สร้าง Dropdown สำหรับเลือก Tool
-local Dropdown = Section_Name_autofarm:NewDropdown(text_Option_bu)
+--local Dropdown = Section_Name_autofarm:NewDropdown(text_Option_bu)
 
 -- อัปเดต Dropdown แบบเรียลไทม์
-Ply.Backpack.ChildAdded:Connect(function()
-    FramSelectFunction()
-    Dropdown:Refresh(tools) -- อัปเดต Dropdown
-end)
+--Ply.Backpack.ChildAdded:Connect(function()
+    --FramSelectFunction()
+    --Dropdown:Refresh(tools)
+--end)
 
-Ply.Backpack.ChildRemoved:Connect(function()
-    FramSelectFunction()
-    Dropdown:Refresh(tools) -- อัปเดต Dropdown
-end)
+--Ply.Backpack.ChildRemoved:Connect(function()
+    --FramSelectFunction()
+    --Dropdown:Refresh(tools) -- อัปเดต Dropdown
+--end)
 
 -- เรียกใช้งาน FramSelectFunction เมื่อเริ่มต้น
-FramSelectFunction()
-Dropdown:Refresh(tools)
+--FramSelectFunction()
+--Dropdown:Refresh(tools)
 
 Section_Name_autofarm:NewToggle(bu_text_farm_money, Description_farm_money, function(state)
     if state then
@@ -125,15 +127,45 @@ Section_Name_autofarm:NewToggle(bu_text_farm_money, Description_farm_money, func
 end)
 
 
---local function farmmobfunction ()
-    --if level == 1 or level >= 9 then
-        
-    --end
---end
 
---Section_Name_autofarm:NewButton(bu_text_farm_mob, Description_farm_mob, function()
-     --farmmobfunction()
---and)
+Section_Name_autofarm:NewToggle(bu_text_farm_mob, Description_farm_mob, function(state)
+     if state then
+	ck_autofarm_mon = true
+	   if ck_autofarm_mon == true then
+			local args = {
+    [1] = workspace.Enemies[v.Name],
+    [2] = {},
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterHit"):FireServer(unpack(args))
+
+local args = {
+    [1] = 0.4000000059604645
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterAttack"):FireServer(unpack(args))
+
+for i, v in ipairs(workspace.Enemies:GetChildren()) do
+	if v.Name == "Bandit" then
+		local args = {
+    [1] = workspace.Enemies[v.Name],
+    [2] = {},
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterHit"):FireServer(unpack(args))
+
+local args = {
+    [1] = 0.4000000059604645
+}
+
+game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterAttack"):FireServer(unpack(args))
+	end
+end	
+	end
+	   else
+	ck_autofarm_mon = false
+     end
+and)
 
 
 
