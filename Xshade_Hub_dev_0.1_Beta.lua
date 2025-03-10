@@ -165,7 +165,7 @@ end
 	   else
 	ck_autofarm_mon = false
      end
-and)
+end)
 
 
 
